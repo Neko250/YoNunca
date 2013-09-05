@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.*;
 import com.badlogic.gdx.utils.*;
@@ -21,8 +22,8 @@ public class MainMenuScreen implements Screen {
 	private TextureAtlas atlas;
 	private Skin skin;
 	private BitmapFont titleF, subtitleF, buttonsF;
-	private TextButton play, quit;
-	private Label title, subtitle;
+	private Button play, quit;
+	private Label title, subtitle, playL, quitL;
 	private Image wall;
 	
 	public MainMenuScreen(YoNunca app, Rectangle viewPort) {
@@ -35,7 +36,7 @@ public class MainMenuScreen implements Screen {
 		Gdx.gl.glViewport((int) viewPort.getX(), (int) viewPort.getY(),
 				(int) viewPort.getWidth(), (int) viewPort.getHeight());
 		
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		stage.act(delta);
@@ -67,21 +68,23 @@ public class MainMenuScreen implements Screen {
 		atlas = new TextureAtlas(Gdx.files.internal("img/textures.pack"));
 		skin = new Skin();
 		skin.addRegions(atlas);
-		titleF = new BitmapFont(Gdx.files.internal("font/broadway.fnt"), false);
-		subtitleF = new BitmapFont(Gdx.files.internal("font/font.fnt"), false);
+		titleF = new BitmapFont(Gdx.files.internal("font/title.fnt"), false);
+		subtitleF = new BitmapFont(Gdx.files.internal("font/subtitle.fnt"),
+				false);
 		subtitleF.setScale(0.5f);
 		buttonsF = new BitmapFont(Gdx.files.internal("font/buttons.fnt"), false);
 		buttonsF.setScale(0.75f);
 		Gdx.input.setInputProcessor(stage);
 		
-		TextButtonStyle butStyle = new TextButtonStyle();
-		butStyle.up = skin.getDrawable("button_up");
-		butStyle.down = skin.getDrawable("button_down");
-		butStyle.font = buttonsF;
+		ButtonStyle butStyle = new TextButtonStyle();
+		butStyle.up = skin.getDrawable("but_up");
+		butStyle.down = skin.getDrawable("but_down");
 		LabelStyle titleLabStyle = new LabelStyle();
 		titleLabStyle.font = titleF;
 		LabelStyle subLabStyle = new LabelStyle();
 		subLabStyle.font = subtitleF;
+		LabelStyle butLabStyle = new LabelStyle();
+		butLabStyle.font = buttonsF;
 		
 		title = new Label(YoNunca.NAME, titleLabStyle);
 		title.setBounds(
@@ -98,9 +101,17 @@ public class MainMenuScreen implements Screen {
 				* 6 / 8 - (subtitleF.getBounds(sub).height / 2) + 20,
 				subtitleF.getBounds(sub).width, subtitleF.getBounds(sub).height);
 		
-		play = new TextButton("Start !", butStyle);
-		play.setBounds(viewPort.getWidth() / 2 - (200 / 2),
-				viewPort.getHeight() / 2 - (40 / 2) - 110, 200, 40);
+		playL = new Label("Play !", butLabStyle);
+		playL.setBounds(viewPort.getWidth() / 2
+				- (buttonsF.getBounds("Play !").width / 2) + 45,
+				viewPort.getHeight() / 2
+						- (buttonsF.getBounds("Play !").height / 2) - 45,
+				buttonsF.getBounds("Play !").width,
+				buttonsF.getBounds("Play !").height);
+		
+		play = new Button(butStyle);
+		play.setBounds(viewPort.getWidth() / 4 - (64 / 2), viewPort.getHeight()
+				/ 2 - (64 / 2) - 50, 64, 64);
 		play.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -113,9 +124,17 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 		
-		quit = new TextButton("Quit", butStyle);
-		quit.setBounds(viewPort.getWidth() / 2 - (200 / 2),
-				viewPort.getHeight() / 4 - (40 / 2) - 50, 200, 40);
+		quitL = new Label("Quit", butLabStyle);
+		quitL.setBounds(viewPort.getWidth() / 2
+				- (buttonsF.getBounds("Quit").width / 2) + 35,
+				viewPort.getHeight() / 4
+						- (buttonsF.getBounds("Quit").height / 2) + 5,
+				buttonsF.getBounds("Quit").width,
+				buttonsF.getBounds("Quit").height);
+		
+		quit = new Button(butStyle);
+		quit.setBounds(viewPort.getWidth() / 4 - (64 / 2), viewPort.getHeight()
+				/ 4 - (64 / 2), 64, 64);
 		quit.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -128,14 +147,16 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 		
-		wall = new Image(skin.getDrawable("menu_back"));
+		wall = new Image(skin.getDrawable("wall"));
 		wall.setBounds(0, 0, viewPort.getWidth(), viewPort.getHeight());
 		
 		stage.addActor(wall);
 		stage.addActor(title);
 		stage.addActor(subtitle);
 		stage.addActor(play);
+		stage.addActor(playL);
 		stage.addActor(quit);
+		stage.addActor(quitL);
 	}
 	
 	@Override

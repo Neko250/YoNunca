@@ -8,8 +8,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Yo Nunca";
 		cfg.useGL20 = true;
-		cfg.fullscreen = true;
-		cfg.width = 640;
+		cfg.fullscreen = false;
+		cfg.width = 320;
 		cfg.height = 480;
 		cfg.x = -1;
 		cfg.y = -1;
