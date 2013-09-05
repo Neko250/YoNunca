@@ -8,4 +8,4 @@ Only Spanish version available
 Download
 -------
 
-https://github.com/Neko250/YoNunca/releases/tag/0.0.1_Alpha
+https://github.com/Neko250/YoNunca/releases/tag/0.0.2_Alpha
