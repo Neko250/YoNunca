@@ -3,30 +3,44 @@ textures.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+menu_back
+  rotate: false
+  xy: 1, 23
+  size: 320, 480
+  orig: 320, 480
+  offset: 0, 0
+  index: -1
+splash
+  rotate: false
+  xy: 323, 23
+  size: 320, 480
+  orig: 320, 480
+  offset: 0, 0
+  index: -1
 button_down
   rotate: false
-  xy: 1, 29
+  xy: 1, 1
   size: 200, 20
   orig: 200, 20
   offset: 0, 0
   index: -1
 button_up
   rotate: false
-  xy: 1, 7
+  xy: 645, 483
   size: 200, 20
   orig: 200, 20
   offset: 0, 0
   index: -1
 mary_mid
   rotate: false
-  xy: 203, 1
+  xy: 645, 433
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 mary_low
   rotate: false
-  xy: 253, 13
+  xy: 645, 395
   size: 36, 36
   orig: 36, 36
   offset: 0, 0

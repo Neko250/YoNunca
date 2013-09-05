@@ -1,6 +1,7 @@
 package com.github.neko250.yonunca;
 
 import com.github.neko250.yonunca.screens.*;
+import com.github.neko250.yonunca.soundbanks.*;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.math.*;
 
@@ -9,12 +10,15 @@ public class YoNunca extends Game {
 	public static final String LOG = "Yo Nunca";
 	public static final String NAME = "Yo Nunca";
 	
+	public static SoundBank sb;
+	
 	private Rectangle viewPort;
 	
 	@Override
 	public void create() {
+		sb = new SoundBank();
 		viewPort = new Rectangle(0, 0, 320, 480);
-		this.setScreen(new MainMenuScreen(this, viewPort));
+		this.setScreen(new SplashScreen(this, viewPort));
 	}
 	
 	@Override

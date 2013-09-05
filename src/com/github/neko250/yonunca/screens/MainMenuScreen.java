@@ -23,7 +23,7 @@ public class MainMenuScreen implements Screen {
 	private BitmapFont titleF, subtitleF, buttonsF;
 	private TextButton play, quit;
 	private Label title, subtitle;
-	private Image mary;
+	private Image wall;
 	
 	public MainMenuScreen(YoNunca app, Rectangle viewPort) {
 		this.app = app;
@@ -35,7 +35,7 @@ public class MainMenuScreen implements Screen {
 		Gdx.gl.glViewport((int) viewPort.getX(), (int) viewPort.getY(),
 				(int) viewPort.getWidth(), (int) viewPort.getHeight());
 		
-		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		stage.act(delta);
@@ -62,17 +62,16 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void show() {
 		batch = new SpriteBatch();
-		stage = new Stage(viewPort.getWidth(), viewPort.getHeight(), true);
+		stage = new Stage(viewPort.getWidth(), viewPort.getHeight(), false);
 		stage.clear();
 		atlas = new TextureAtlas(Gdx.files.internal("img/textures.pack"));
 		skin = new Skin();
 		skin.addRegions(atlas);
-		titleF = new BitmapFont(Gdx.files.internal("font/font.fnt"), false);
-		subtitleF = new BitmapFont(Gdx.files.internal("font/font_alt.fnt"),
-				false);
+		titleF = new BitmapFont(Gdx.files.internal("font/broadway.fnt"), false);
+		subtitleF = new BitmapFont(Gdx.files.internal("font/font.fnt"), false);
 		subtitleF.setScale(0.5f);
-		buttonsF = new BitmapFont(Gdx.files.internal("font/title.fnt"), false);
-		buttonsF.setScale(0.5f);
+		buttonsF = new BitmapFont(Gdx.files.internal("font/buttons.fnt"), false);
+		buttonsF.setScale(0.75f);
 		Gdx.input.setInputProcessor(stage);
 		
 		TextButtonStyle butStyle = new TextButtonStyle();
@@ -88,7 +87,7 @@ public class MainMenuScreen implements Screen {
 		title.setBounds(
 				viewPort.getWidth() / 2
 						- (titleF.getBounds(title.getText()).width / 2),
-				viewPort.getHeight() * 3 / 4
+				viewPort.getHeight() * 7 / 8
 						- (titleF.getBounds(title.getText()).height / 2),
 				titleF.getBounds(title.getText()).width,
 				titleF.getBounds(title.getText()).height);
@@ -96,12 +95,12 @@ public class MainMenuScreen implements Screen {
 		subtitle = new Label(sub, subLabStyle);
 		subtitle.setBounds(viewPort.getWidth() / 2
 				- (subtitleF.getBounds(sub).width / 2), viewPort.getHeight()
-				* 5 / 8 - (subtitleF.getBounds(sub).height / 2) + 20,
+				* 6 / 8 - (subtitleF.getBounds(sub).height / 2) + 20,
 				subtitleF.getBounds(sub).width, subtitleF.getBounds(sub).height);
 		
 		play = new TextButton("Start !", butStyle);
 		play.setBounds(viewPort.getWidth() / 2 - (200 / 2),
-				viewPort.getHeight() / 2 - (40 / 2) - 10, 200, 40);
+				viewPort.getHeight() / 2 - (40 / 2) - 110, 200, 40);
 		play.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -116,7 +115,7 @@ public class MainMenuScreen implements Screen {
 		
 		quit = new TextButton("Quit", butStyle);
 		quit.setBounds(viewPort.getWidth() / 2 - (200 / 2),
-				viewPort.getHeight() / 4 - (40 / 2) + 10, 200, 40);
+				viewPort.getHeight() / 4 - (40 / 2) - 50, 200, 40);
 		quit.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -129,14 +128,14 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 		
-		mary = new Image(skin.getDrawable("mary_mid"));
-		mary.setBounds(viewPort.getWidth() - 50, 2, 48, 48);
+		wall = new Image(skin.getDrawable("menu_back"));
+		wall.setBounds(0, 0, viewPort.getWidth(), viewPort.getHeight());
 		
+		stage.addActor(wall);
 		stage.addActor(title);
 		stage.addActor(subtitle);
 		stage.addActor(play);
 		stage.addActor(quit);
-		stage.addActor(mary);
 	}
 	
 	@Override

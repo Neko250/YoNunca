@@ -4,15 +4,29 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.*;
 import com.github.neko250.yonunca.*;
+import com.github.neko250.yonunca.soundbanks.SoundBank;
 
 public class GameScreen implements Screen {
 	public YoNunca app;
-	private static final String message = "In Development...";
+	private static final String sub = "Coded By Neko250";
+	
+	private SoundBank sb;
 	
 	private Rectangle viewPort;
 	private SpriteBatch batch;
+	private Stage stage;
+	private TextureAtlas atlas;
+	private BitmapFont buttonsF, titleF, subtitleF;
+	private Label title, subtitle;
+	private TextButton next, replay, back;
+	private Skin skin;
+	private Image wall;
 	
 	public GameScreen(YoNunca app, Rectangle viewPort) {
 		this.app = app;
@@ -24,12 +38,14 @@ public class GameScreen implements Screen {
 		Gdx.gl.glViewport((int) viewPort.getX(), (int) viewPort.getY(),
 				(int) viewPort.getWidth(), (int) viewPort.getHeight());
 		
-		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		if (Gdx.input.justTouched()) {
-			app.setScreen(new MainMenuScreen(app, viewPort));
-		}
+		stage.act(delta);
+		
+		batch.begin();
+		stage.draw();
+		batch.end();
 	}
 	
 	@Override
@@ -48,7 +64,99 @@ public class GameScreen implements Screen {
 	
 	@Override
 	public void show() {
+		sb = YoNunca.sb;
+		
 		batch = new SpriteBatch();
+		stage = new Stage(viewPort.getWidth(), viewPort.getHeight(), false);
+		stage.clear();
+		atlas = new TextureAtlas(Gdx.files.internal("img/textures.pack"));
+		skin = new Skin();
+		skin.addRegions(atlas);
+		titleF = new BitmapFont(Gdx.files.internal("font/broadway.fnt"), false);
+		subtitleF = new BitmapFont(Gdx.files.internal("font/font.fnt"), false);
+		subtitleF.setScale(0.5f);
+		buttonsF = new BitmapFont(Gdx.files.internal("font/buttons.fnt"), false);
+		buttonsF.setScale(0.75f);
+		Gdx.input.setInputProcessor(stage);
+		
+		TextButtonStyle butStyle = new TextButtonStyle();
+		butStyle.up = skin.getDrawable("button_up");
+		butStyle.down = skin.getDrawable("button_down");
+		butStyle.font = buttonsF;
+		LabelStyle titleLabStyle = new LabelStyle();
+		titleLabStyle.font = titleF;
+		LabelStyle subLabStyle = new LabelStyle();
+		subLabStyle.font = subtitleF;
+		
+		title = new Label(YoNunca.NAME, titleLabStyle);
+		title.setBounds(
+				viewPort.getWidth() / 2
+						- (titleF.getBounds(title.getText()).width / 2),
+				viewPort.getHeight() * 7 / 8
+						- (titleF.getBounds(title.getText()).height / 2),
+				titleF.getBounds(title.getText()).width,
+				titleF.getBounds(title.getText()).height);
+		
+		subtitle = new Label(sub, subLabStyle);
+		subtitle.setBounds(viewPort.getWidth() / 2
+				- (subtitleF.getBounds(sub).width / 2), viewPort.getHeight()
+				* 6 / 8 - (subtitleF.getBounds(sub).height / 2) + 20,
+				subtitleF.getBounds(sub).width, subtitleF.getBounds(sub).height);
+		
+		next = new TextButton("Next", butStyle);
+		next.setBounds(viewPort.getWidth() / 2 - (200 / 2),
+				viewPort.getHeight() * 3 / 8 - (40 / 2), 200, 40);
+		next.addListener(new InputListener() {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
+			
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				sb.playNext();
+			}
+		});
+		
+		replay = new TextButton("Replay", butStyle);
+		replay.setBounds(viewPort.getWidth() / 2 - (200 / 2),
+				viewPort.getHeight() * 2 / 8 - (40 / 2), 200, 40);
+		replay.addListener(new InputListener() {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
+			
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				sb.replay();
+			}
+		});
+		
+		back = new TextButton("Back", butStyle);
+		back.setBounds(viewPort.getWidth() / 2 - (200 / 2),
+				viewPort.getHeight() * 1 / 8 - (40 / 2), 200, 40);
+		back.addListener(new InputListener() {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
+			
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				app.setScreen(new MainMenuScreen(app, viewPort));
+			}
+		});
+		
+		wall = new Image(skin.getDrawable("menu_back"));
+		wall.setBounds(0, 0, viewPort.getWidth(), viewPort.getHeight());
+		
+		stage.addActor(wall);
+		stage.addActor(title);
+		stage.addActor(subtitle);
+		stage.addActor(next);
+		stage.addActor(replay);
+		stage.addActor(back);
 	}
 	
 	@Override
