@@ -65,14 +65,13 @@ public class MainMenuScreen implements Screen {
 		batch = new SpriteBatch();
 		stage = new Stage(viewPort.getWidth(), viewPort.getHeight(), false);
 		stage.clear();
-		atlas = new TextureAtlas(Gdx.files.internal("img/textures.pack"));
+		atlas = YoNunca.assets.get("img/textures.pack", TextureAtlas.class);
 		skin = new Skin();
 		skin.addRegions(atlas);
-		titleF = new BitmapFont(Gdx.files.internal("font/title.fnt"), false);
-		subtitleF = new BitmapFont(Gdx.files.internal("font/subtitle.fnt"),
-				false);
+		titleF = YoNunca.assets.get("font/title.fnt", BitmapFont.class);
+		subtitleF = YoNunca.assets.get("font/subtitle.fnt", BitmapFont.class);
 		subtitleF.setScale(0.5f);
-		buttonsF = new BitmapFont(Gdx.files.internal("font/buttons.fnt"), false);
+		buttonsF = YoNunca.assets.get("font/buttons.fnt", BitmapFont.class);
 		buttonsF.setScale(0.75f);
 		Gdx.input.setInputProcessor(stage);
 		
@@ -176,6 +175,9 @@ public class MainMenuScreen implements Screen {
 	
 	@Override
 	public void dispose() {
-		
+		stage.dispose();
+		batch.dispose();
+		atlas.dispose();
+		skin.dispose();
 	}
 }

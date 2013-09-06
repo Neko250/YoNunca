@@ -2,13 +2,14 @@ package com.github.neko250.yonunca.soundbanks;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.*;
+import com.github.neko250.yonunca.YoNunca;
 
 public class Phrase {
 	private Sound phrase;
 	private String message;
 	
 	public Phrase(String path, String message) {
-		phrase = Gdx.audio.newSound(Gdx.files.internal(path));
+		phrase = YoNunca.assets.get(path, Sound.class);
 		this.message = message;
 	}
 	

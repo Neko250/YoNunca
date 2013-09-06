@@ -5,49 +5,63 @@ filter: Nearest,Nearest
 repeat: none
 menu_back
   rotate: false
-  xy: 1, 533
-  size: 320, 480
-  orig: 320, 480
-  offset: 0, 0
-  index: -1
-splash
-  rotate: false
-  xy: 1, 51
+  xy: 1, 22
   size: 320, 480
   orig: 320, 480
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 323, 533
+  xy: 323, 22
   size: 320, 480
   orig: 320, 480
   offset: 0, 0
   index: -1
+panel
+  rotate: false
+  xy: 645, 302
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
 but_down
   rotate: false
-  xy: 323, 403
+  xy: 645, 172
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 but_up
   rotate: false
-  xy: 645, 885
+  xy: 847, 374
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-mary_mid
+load_base
   rotate: false
   xy: 1, 1
+  size: 199, 19
+  orig: 199, 19
+  offset: 0, 0
+  index: -1
+load_top
+  rotate: false
+  xy: 202, 1
+  size: 199, 19
+  orig: 199, 19
+  offset: 0, 0
+  index: -1
+mary_mid
+  rotate: false
+  xy: 645, 122
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 mary_low
   rotate: false
-  xy: 323, 365
+  xy: 775, 264
   size: 36, 36
   orig: 36, 36
   offset: 0, 0
